@@ -3,9 +3,6 @@ kind: ConfigMap
 metadata:
   name: app-config
 data:
-  # MariaDB root password
-  MARIADB_ROOT_PASSWORD: Root@123
-
   # Default database user and password
   DB_USER: college_user
   DB_PASSWORD: deereddy@123
