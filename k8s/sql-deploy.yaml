@@ -22,12 +22,13 @@ spec:
           name: sql-cont
           ports:
             - containerPort: 3306   
+          env:
+                - name: MYSQL_ROOT_PASSWORD
+                  value: "Root@123"
           envFrom:
             - configMapRef:
                 name:  app-config
-              env:
-                - name: MYSQL_ROOT_PASSWORD
-                  value: "Root@123"
+              
           resources:
             requests:
               cpu: "100m"
