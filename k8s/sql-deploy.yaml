@@ -51,15 +51,15 @@ spec:
           configMap:
             name: mysql-init-script
 
-      volumeClaimTemplates:
-        - metadata:
-            name: sql-v
-          spec:
-            accessModes: [ "ReadWriteOnce" ]
-            storageClassName: "college-nfs-new"
-            resources:
-              requests:
-                storage: 1Gi
+    volumeClaimTemplates:
+      - metadata:
+          name: sql-v
+        spec:
+          accessModes: [ "ReadWriteOnce" ]
+          storageClassName: "college-nfs-new"
+          resources:
+            requests:
+              storage: 1Gi
 
       
 
