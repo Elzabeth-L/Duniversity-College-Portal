@@ -8,8 +8,5 @@ spec:
   secretsName: my-db-secrets
 
   pxc:
-    size: 3   # 🔥 3 replicas
+    size: 3
     image: percona/percona-xtradb-cluster:8.0
-
-  backup:
-    enabled: true
