@@ -5,7 +5,7 @@ metadata:
 spec:
   replicas: 3
   minReadySeconds:  10
-  serviceName: "mariadb-headless"
+  serviceName: "mariadb"
   updateStrategy:
     type: RollingUpdate
   selector:
@@ -65,7 +65,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: mariadb-headless
+  name: mariadb
 spec:
   selector:
     app: sql-app
