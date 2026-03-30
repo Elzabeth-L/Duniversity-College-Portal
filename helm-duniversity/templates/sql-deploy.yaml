@@ -1,10 +1,10 @@
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: sql-deploy
+  name: {{ .Values.sql.name }}
   namespace: college-app
 spec:
-  replicas: 1
+  replicas: {{ .Values.sql.replicaCount }}
   minReadySeconds:  10
   serviceName: "mariadb"
   updateStrategy:
@@ -19,10 +19,10 @@ spec:
     spec:
       terminationGracePeriodSeconds:  10
       containers:
-        - image: mariadb:11
+        - image: "{{ .Values.sql.image.repository }}:{{ .Values.sql.image.tag }}"
           name: sql-cont
           ports:
-            - containerPort: 3306   
+            - containerPort: {{ .Values.sql.port}} 
           env:
                 - name: MARIADB_ROOT_PASSWORD
                   value: "Root@123"

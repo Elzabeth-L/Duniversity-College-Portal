@@ -4,7 +4,7 @@ metadata:
   name: {{ .Values.app.name }}
   namespace: college-app
 spec:
-  replicas: {{ .Values.replicaCount }}
+  replicas: {{ .Values.app.replicaCount }}
   strategy:
     type: RollingUpdate
     rollingUpdate:
@@ -20,9 +20,9 @@ spec:
     spec:
       containers:
         - name: college-cont
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          image: "{{ .Values.app.image.repository }}:{{ .Values.app.image.tag }}"
           ports:
-            - containerPort: {{ .Values.port }}
+            - containerPort: {{ .Values.app.port }}
           resources:
             requests:
               cpu: "100m"
@@ -41,7 +41,7 @@ metadata:
   name: app-service
 spec:
   selector:
-    app: college-app   # ✅ FIXED
+    app: college-app  
   type: ClusterIP
   ports:
     - port: 3000
