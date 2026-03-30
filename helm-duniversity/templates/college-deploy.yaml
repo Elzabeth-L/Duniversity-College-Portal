@@ -4,7 +4,7 @@ metadata:
   name: {{ .Values.app.name }}
   namespace: college-app
 spec:
-  replicas: {{ .Values.replicaCount}}
+  replicas: {{ .Values.replicaCount }}
   strategy:
     type: RollingUpdate
     rollingUpdate:
