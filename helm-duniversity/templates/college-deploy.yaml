@@ -1,10 +1,10 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: college-deploy
+  name: {{ .Values.app.name }}
   namespace: college-app
 spec:
-  replicas: 3
+  replicas: {{ .Values.replicaCount}}
   strategy:
     type: RollingUpdate
     rollingUpdate:
@@ -20,9 +20,9 @@ spec:
     spec:
       containers:
         - name: college-cont
-          image: iyask/collegeapp:v1.1.0
+          image: {{ .Values.image.repository }}: {{ .Values.image.tag }}
           ports:
-            - containerPort: 3000
+            - containerPort: {{ .Values.port }}
           resources:
             requests:
               cpu: "100m"
