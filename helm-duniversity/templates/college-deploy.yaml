@@ -20,7 +20,12 @@ spec:
     spec:
       containers:
         - name: college-cont
-          image: {{ .Values.image.repository }}: {{ .Values.image.tag }}
+          spec:
+  containers:
+    - name: college-cont
+      image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+      ports:
+        - containerPort: {{ .Values.port }}
           ports:
             - containerPort: {{ .Values.port }}
           resources:
