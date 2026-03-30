@@ -1,0 +1,75 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: sql-deploy
+spec:
+  replicas: 3
+  minReadySeconds:  10
+  serviceName: "mariadb"
+  updateStrategy:
+    type: RollingUpdate
+  selector:
+    matchLabels:
+      app: sql-app
+  template:
+    metadata:
+      labels:
+        app: sql-app
+    spec:
+      terminationGracePeriodSeconds:  10
+      containers:
+        - image: mariadb:11
+          name: sql-cont
+          ports:
+            - containerPort: 3306   
+          env:
+                - name: MARIADB_ROOT_PASSWORD
+                  value: "Root@123"
+          envFrom:
+            - configMapRef:
+                name:  app-config
+              
+          resources:
+            requests:
+              cpu: "200m"
+              memory: "512Mi"
+            limits:
+              cpu: "500m"
+              memory: "1Gi"
+
+          volumeMounts:
+            - name: sql-v
+              mountPath: /var/lib/mysql
+            - name: init-script
+              mountPath: /docker-entrypoint-initdb.d/init.sql
+              subPath: init.sql
+              
+      volumes:
+        - name: init-script
+          configMap:
+            name: mysql-init-script
+
+  volumeClaimTemplates:
+    - metadata:
+        name: sql-v
+      spec:
+        accessModes: [ "ReadWriteOnce" ]
+        storageClassName: "college-nfs-stateful"
+        resources:
+          requests:
+            storage: 1Gi
+
+      
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mariadb
+spec:
+  selector:
+    app: sql-app
+  clusterIP:  None
+  ports:
+    - port: 3306
+      targetPort: 3306

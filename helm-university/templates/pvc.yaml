@@ -1,0 +1,12 @@
+apiVersion:  v1
+kind:  PersistentVolumeClaim
+metadata:
+  name:  college-pvc-new
+spec:
+  storageClassName:  college-nfs-new
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage:  2Gi
+   
